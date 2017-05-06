@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ltchen.ssm.demo.dao.UserDao">
+  <resultMap id="UserMap" type="com.ltchen.ssm.demo.bean.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" typeHandler="com.ltchen.ssm.demo.util.GenderEnumTypeHandler"/>
+    <result column="is_active" jdbcType="CHAR" property="isActive" typeHandler="com.ltchen.ssm.demo.util.BooleanTypeHandler"/>
+  </resultMap>
+  
+  <select id="selectAll" resultMap="UserMap">
+    select 
+    	id, username, password, gender, is_active
+    from t_user
+  </select>
+  <insert id="insert" parameterType="com.ltchen.ssm.demo.bean.User">
+  	insert into t_user(id, username, password, gender, is_active)
+  		values(#{id,jdbcType=INTEGER},#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{gender,typeHandler=com.ltchen.ssm.demo.util.GenderEnumTypeHandler},
+  		#{isActive,typeHandler=com.ltchen.ssm.demo.util.BooleanTypeHandler});
+  </insert>
+</mapper>
